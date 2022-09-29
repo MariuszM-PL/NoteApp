@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Drawing;
+using System.Collections;
 
 namespace NoteApp
 {
     public class DatabaseSQL
     {
-        private static string connectionString = @"Data Source=DESKTOP-T5KFV74\SQLEXPRESS;User Id=Mario;Password=Szczecin1234;Initial Catalog=NoteDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private static string connectionString = @"Data Source=DESKTOP-NSOG66U\SQLEXPRESS;User Id=Mario;Password=Szczecin1234;Initial Catalog=NoteDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         private static SqlConnection newConnection = new SqlConnection(connectionString);
 
         public static void CreateConnectDB()
@@ -62,7 +63,7 @@ namespace NoteApp
 
             cmd.ExecuteNonQuery();
 
-            MessageBox.Show("New data sended to database");
+            MessageBox.Show("New note saved in database");
             newConnection.Close();
         }
 
@@ -90,7 +91,7 @@ namespace NoteApp
                 Note note = new Note(rdr.GetInt32(0), rdr.GetString(1), rdr.GetString(2), rdr.GetString(3));
                 Note.notes.Add(note);
             }
-            MessageBox.Show("Values from database are restored...");
+            MessageBox.Show("Notes from database are restored...");
             newConnection.Close();
 
         }
@@ -98,7 +99,8 @@ namespace NoteApp
         public static void DisplayList(ListBox listElements)
         {
             listElements.Items.Clear();
-            foreach(var note in Note.notes)
+            Note.notes = Note.notes.OrderBy(x => x.Date).ToList();
+            foreach (var note in Note.notes)
             {
                 listElements.Items.Add($"{note.ID}.{note.Title}");
             }

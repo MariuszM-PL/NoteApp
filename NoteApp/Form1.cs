@@ -18,12 +18,14 @@ namespace NoteApp
         {
             string title = tbTitle.Text;
             string note = txtNote.Text;
-            string date = DateTime.Now.ToString();
+            string date = dateTimePick.Value.ToString();
+            //string date = DateTime.Now.ToString();
             DatabaseSQL.InsertDataDB(title, note, date);
 
             tbTitle.Clear();
             txtNote.Clear();
-            lblDateValue.Text = "";
+
+            //lblDateValue.Text = "";
 
             DatabaseSQL.GetDataDB();
             DatabaseSQL.DisplayList(listElements);
@@ -51,7 +53,7 @@ namespace NoteApp
                 {
                     tbTitle.Text = note.Title;
                     txtNote.Text = note.Description;
-                    lblDateValue.Text = note.Date;
+                    dateTimePick.Value = DateTime.Parse(note.Date);
                 }
             }
         }
@@ -75,6 +77,62 @@ namespace NoteApp
                 DatabaseSQL.GetDataDB();
                 DatabaseSQL.DisplayList(listElements);
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnAdd_MouseHover(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAdd_MouseLeave(object sender, EventArgs e)
+        {
+            btnAdd.ForeColor = Color.Black;
+            btnAdd.BackColor = Color.FromArgb(253, 227, 102);
+        }
+
+        private void btnAdd_MouseEnter(object sender, EventArgs e)
+        {
+            btnAdd.ForeColor = Color.FromArgb(253, 227, 102);
+            btnAdd.BackColor = Color.Black;
+        }
+
+        private void btnDelete_MouseEnter(object sender, EventArgs e)
+        {
+            btnDelete.ForeColor = Color.FromArgb(253, 227, 102);
+            btnDelete.BackColor = Color.Black;
+        }
+
+        private void btnDelete_MouseLeave(object sender, EventArgs e)
+        {
+            btnDelete.ForeColor = Color.Black;
+            btnDelete.BackColor = Color.FromArgb(253, 227, 102);
+        }
+
+        private void button1_MouseEnter(object sender, EventArgs e)
+        {
+            btnExit.ForeColor = Color.FromArgb(253, 227, 102);
+            btnExit.BackColor = Color.Black;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            btnExit.ForeColor = Color.Black;
+            btnExit.BackColor = Color.FromArgb(253, 227, 102);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblDate_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
