@@ -66,6 +66,17 @@ namespace NoteApp
             newConnection.Close();
         }
 
+        public static void DeleteDataDB(int id)
+        {
+            CreateConnectDB();
+            string query = "DELETE FROM Notes WHERE id = @id";
+            SqlCommand cmd = new SqlCommand(query, newConnection);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+
+            MessageBox.Show("Note was deleted from database");
+            newConnection.Close();
+        }
         public static void GetDataDB()
         {
             CreateConnectDB();
