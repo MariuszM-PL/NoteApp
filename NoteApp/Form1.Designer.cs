@@ -36,6 +36,7 @@
             this.lblDateValue = new System.Windows.Forms.Label();
             this.listNotes = new System.Windows.Forms.ListBox();
             this.txtNote = new System.Windows.Forms.TextBox();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbTitle
@@ -114,11 +115,23 @@
             this.txtNote.Size = new System.Drawing.Size(201, 170);
             this.txtNote.TabIndex = 9;
             // 
+            // btnDelete
+            // 
+            this.btnDelete.AccessibleName = "btnDelete";
+            this.btnDelete.Location = new System.Drawing.Point(277, 296);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(95, 62);
+            this.btnDelete.TabIndex = 10;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 361);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.txtNote);
             this.Controls.Add(this.listNotes);
             this.Controls.Add(this.lblDateValue);
@@ -144,5 +157,6 @@
         private Label lblDateValue;
         private ListBox listNotes;
         private TextBox txtNote;
+        private Button btnDelete;
     }
 }

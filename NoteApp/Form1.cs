@@ -55,5 +55,26 @@ namespace NoteApp
                 }
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int idNote = 0;
+            if(listNotes.SelectedItem != null)
+            {
+                string? selectedNote = listNotes.SelectedItem.ToString();
+                string[] idNotes = selectedNote.Split(".");
+                foreach(string id in idNotes)
+                {
+                    if(Int32.TryParse(id, out idNote))
+                    {
+                        break;
+                    }
+                }
+
+                DatabaseSQL.DeleteDataDB(idNote);
+                DatabaseSQL.GetDataDB();
+                DatabaseSQL.DisplayList(listElements);
+            }
+        }
     }
 }
