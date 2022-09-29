@@ -11,7 +11,7 @@ namespace NoteApp
 {
     public class DatabaseSQL
     {
-        private static string connectionString = @"Data Source=DESKTOP-T5KFV74\SQLEXPRESS;Initial Catalog=NoteDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private static string connectionString = @"Data Source=DESKTOP-T5KFV74\SQLEXPRESS;User Id=Mario;Password=Szczecin1234;Initial Catalog=NoteDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         private static SqlConnection newConnection = new SqlConnection(connectionString);
 
         public static void CreateConnectDB()
