@@ -3,24 +3,33 @@ namespace NoteApp
     public partial class Form1 : Form
     {
         private int id;
-        private string title;
+        private string? title;
         ListBox listElements;
         public Form1()
         {
             InitializeComponent();
+            InitializerTimePicker();
             DatabaseSQL.CreateDB();
             DatabaseSQL.GetDataDB();
             listElements = listNotes;
             DatabaseSQL.DisplayList(listElements);
         }
 
+        private void InitializerTimePicker()
+        {
+            timePicker.Format = DateTimePickerFormat.Time;
+            timePicker.ShowUpDown = true;
+            Controls.Add(timePicker);
+        }
         private void btnAdd_Click(object sender, EventArgs e)
         {
             string title = tbTitle.Text;
             string note = txtNote.Text;
             string date = dateTimePick.Value.ToString();
+            string time = timePicker.Value.ToString();
+
             //string date = DateTime.Now.ToString();
-            DatabaseSQL.InsertDataDB(title, note, date);
+            DatabaseSQL.InsertDataDB(title, note, date, time);
 
             tbTitle.Clear();
             txtNote.Clear();
@@ -34,28 +43,33 @@ namespace NoteApp
         private void listNotes_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            string s = listNotes.SelectedItem.ToString();
-            string[] subs = s.Split('.');
-            foreach(var sub in subs)
+            string? s = listNotes.SelectedItem.ToString();
+            if (s != null)
             {
-                if(Int32.TryParse(sub, out int number))
+                string[] subs = s.Split('.');
+                foreach (var sub in subs)
                 {
-                    id = number;
+                    if (Int32.TryParse(sub, out int number))
+                    {
+                        id = number;
+                    }
+                    else
+                    {
+                        title = sub;
+                    }
                 }
-                else
+                foreach (var note in Note.notes)
                 {
-                    title = sub;
+                    if (note.ID == id && note.Title == title)
+                    {
+                        tbTitle.Text = note.Title;
+                        txtNote.Text = note.Description;
+                        dateTimePick.Value = note.Date;
+                        timePicker.Value = note.Time;
+                    }
                 }
             }
-            foreach (var note in Note.notes)
-            {
-                if(note.ID == id && note.Title == title)
-                {
-                    tbTitle.Text = note.Title;
-                    txtNote.Text = note.Description;
-                    dateTimePick.Value = DateTime.Parse(note.Date);
-                }
-            }
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -64,12 +78,15 @@ namespace NoteApp
             if(listNotes.SelectedItem != null)
             {
                 string? selectedNote = listNotes.SelectedItem.ToString();
-                string[] idNotes = selectedNote.Split(".");
-                foreach(string id in idNotes)
+                if (selectedNote != null)
                 {
-                    if(Int32.TryParse(id, out idNote))
+                    string[] idNotes = selectedNote.Split(".");
+                    foreach (string? id in idNotes)
                     {
-                        break;
+                        if (Int32.TryParse(id, out idNote))
+                        {
+                            break;
+                        }
                     }
                 }
 
@@ -133,6 +150,11 @@ namespace NoteApp
         private void lblDate_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
