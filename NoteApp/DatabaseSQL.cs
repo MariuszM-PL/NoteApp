@@ -12,25 +12,41 @@ namespace NoteApp
 {
     public class DatabaseSQL
     {
-        private static string srvAddress = @"DESKTOP-T5KFV74\SQLEXPRESS";
-        private static string username = "Mario";
-        private static string password = "Szczecin1234";
+        private static string? srvAddress;
+        private static string? username;
+        private static string? password;
+        private static string? connectionString;
+        private static SqlConnection? newConnection;
 
-        private static string connectionString = @$"Data Source={srvAddress};User Id={username};Password={password};Initial Catalog=NoteDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        private static SqlConnection newConnection = new SqlConnection(connectionString);
-
+        public static void SettingsDB()
+        {
+            List<string> settings = new List<string>();
+            string path = @$"{Application.StartupPath}\database.txt";
+            var lines = File.ReadLines(path);
+            foreach(var line in lines)
+            {
+                settings.Add(line);
+            }
+            srvAddress = settings[0];
+            username = settings[1];
+            password = settings[2];
+            connectionString = @$"Data Source={srvAddress};User Id={username};Password={password};Initial Catalog=NoteDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            newConnection = new SqlConnection(connectionString);
+        }
         public static void CreateConnectDB()
         {
-            try
+            if(newConnection != null)
             {
-                newConnection.Open();
-            }
-            catch (Exception e)
-            {
-                newConnection.Close();
-                MessageBox.Show(e.ToString());
-            }
-            
+                try
+                {
+                    newConnection.Open();
+                }
+                catch (Exception e)
+                {
+                    newConnection.Close();
+                    MessageBox.Show(e.ToString());
+                }
+            }            
         }
 
         public static void CreateDB()
@@ -56,7 +72,8 @@ namespace NoteApp
                     MessageBox.Show("Database was created early...");
                 }
             }
-            newConnection.Close();
+            if(newConnection != null)
+               newConnection.Close();
         }
 
         public static void InsertDataDB(string title, string note, string date, string time)
@@ -74,7 +91,8 @@ namespace NoteApp
             cmd.ExecuteNonQuery();
 
             MessageBox.Show("New note saved in database");
-            newConnection.Close();
+            if (newConnection != null)
+                newConnection.Close();
         }
 
         public static void DeleteDataDB(int id)
@@ -86,7 +104,8 @@ namespace NoteApp
             cmd.ExecuteNonQuery();
 
             MessageBox.Show("Note was deleted from database");
-            newConnection.Close();
+            if (newConnection != null)
+                newConnection.Close();
         }
         public static void GetDataDB()
         {
@@ -102,7 +121,8 @@ namespace NoteApp
                 Note.notes.Add(note);
             }
             MessageBox.Show("Notes from database are restored...");
-            newConnection.Close();
+            if (newConnection != null)
+                newConnection.Close();
 
         }
 

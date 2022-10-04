@@ -7,6 +7,7 @@ namespace NoteApp
         ListBox listElements;
         public Form1()
         {
+            DatabaseSQL.SettingsDB();
             InitializeComponent();
             InitializerTimePicker();
             DatabaseSQL.CreateDB();
