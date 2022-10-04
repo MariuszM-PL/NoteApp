@@ -18,6 +18,9 @@ namespace NoteApp
         private static string? connectionString;
         private static SqlConnection? newConnection;
 
+        /// <summary>
+        /// MS SQL settings for connection from database.txt file
+        /// </summary>
         public static void SettingsDB()
         {
             List<string> settings = new List<string>();
