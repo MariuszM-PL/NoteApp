@@ -36,6 +36,9 @@ namespace NoteApp
             connectionString = @$"Data Source={srvAddress};User Id={username};Password={password};Initial Catalog=NoteDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             newConnection = new SqlConnection(connectionString);
         }
+        /// <summary>
+        /// Function for open and close connect to MS SQL database
+        /// </summary>
         public static void CreateConnectDB()
         {
             if(newConnection != null)
